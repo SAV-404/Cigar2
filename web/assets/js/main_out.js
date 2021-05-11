@@ -642,17 +642,27 @@
         enter: false,
         escape: false,
     };
-
-    fetch('skinList.txt').then(resp => resp.text()).then(data => {
-        const skins = data.split(',').filter(name => name.length > 0);
-        if (skins.length === 0) return;
-        byId('gallery-btn').style.display = 'inline-block';
-        const stamp = Date.now();
-        for (const skin of skins) knownSkins.set(skin, stamp);
-        for (const i of knownSkins.keys()) {
-            if (knownSkins.get(i) !== stamp) knownSkins.delete(i);
+    
+    function get_skin() {
+        return new Promise(function(resolve, reject) {
+            $.get("./skinList", function(data) {
+                resolve(JSON.parse(data))
+            })
+        })
+    }
+    function sort_skin() {
+        return new Promise(async function(resolve, reject) {
+            knownSkins = await get_skin(); 
+            byId('gallery-btn').style.display = 'inline-block';        
+        })
+    }
+    function cellColor(value){
+        for (var i = 0; i < knownSkins.length; i++) {
+            if (knownSkins[i].skinName == value) {
+                return `#${knownSkins[i].cellColor}`;
+            }
         }
-    });
+    }
 
     function hideESCOverlay() {
         escOverlayShown = false;
@@ -720,12 +730,11 @@
     }
 
     function buildGallery() {
-        const sortedSkins = Array.from(knownSkins.keys()).sort();
-        let c = '';
-        for (const skin of sortedSkins) {
-            c += `<li class="skin" onclick="changeSkin('${skin}')">`;
-            c += `<img class="circular" src="./skins/${skin}.png">`;
-            c += `<h4 class="skinName">${skin}</h4>`;
+        let c = '', i; 
+        for (i = 0; i < knownSkins.length; i++) {
+            c += `<li class="skin" onclick="changeSkin('${knownSkins[i].skinName}')">`;
+            c += `<img class="circular" src="./skins/${knownSkins[i].skinName}.png">`;
+            c += `<h4 class="skinName">${knownSkins[i].skinName}</h4>`;
             c += '</li>';
         }
         byId('gallery-body').innerHTML = `<ul id="skinsUL">${c}</ul>`;
@@ -1316,7 +1325,7 @@
         }
         setSkin(value) {
             this.skin = (value && value[0] === '%' ? value.slice(1) : value) || this.skin;
-            if (this.skin === null || !knownSkins.has(this.skin) || loadedSkins.has(this.skin)) {
+            if (this.skin === null || loadedSkins.has(this.skin)) {
                 return;
             }
             const skin = new Image();
@@ -1685,6 +1694,7 @@
 
         gameReset();
         showESCOverlay();
+        sort_skin();
 
         const regex = /ip=([\w\W]+:[0-9]+)/;
         const args = window.location.search;
