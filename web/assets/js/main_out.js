@@ -16,27 +16,6 @@
     }
     */
 
-    class Sound {
-        constructor(src, volume, maximum) {
-            this.src = src;
-            this.volume = typeof volume === 'number' ? volume : 0.5;
-            this.maximum = typeof maximum === 'number' ? maximum : Infinity;
-            this.elms = [];
-        }
-        play(vol) {
-            if (typeof vol === 'number') this.volume = vol;
-            const toPlay = this.elms.find((elm) => elm.paused) ?? this.add();
-            toPlay.volume = this.volume;
-            toPlay.play();
-        }
-        add() {
-            if (this.elms.length >= this.maximum) return this.elms[0];
-            const elm = new Audio(this.src);
-            this.elms.push(elm);
-            return elm;
-        }
-    }
-
     const LOAD_START = Date.now();
 
     Array.prototype.remove = function (a) {
@@ -324,9 +303,6 @@
                     const killed = reader.getUint32();
                     if (!cells.byId.has(killer) || !cells.byId.has(killed))
                         continue;
-                    if (settings.playSounds && cells.mine.includes(killer)) {
-                        (cells.byId.get(killed).s < 20 ? pelletSound : eatSound).play(parseFloat(soundsVolume.value));
-                    }
                     cells.byId.get(killed).destroy(killer);
                 }
 
@@ -618,7 +594,6 @@
 
     let mainCanvas = null;
     let mainCtx = null;
-    let soundsVolume;
     let escOverlayShown = false;
     let isTyping = false;
     let chatBox = null;
@@ -651,8 +626,6 @@
         showPosition: false,
         showBorder: false,
         showGrid: true,
-        playSounds: false,
-        soundsVolume: 0.5,
         moreZoom: false,
         fillSkin: true,
         backgroundSectors: false,
@@ -669,9 +642,6 @@
         enter: false,
         escape: false,
     };
-
-    const eatSound = new Sound('./assets/sound/eat.mp3', 0.5, 10);
-    const pelletSound = new Sound('./assets/sound/pellet.mp3', 0.5, 10);
 
     fetch('skinList.txt').then(resp => resp.text()).then(data => {
         const skins = data.split(',').filter(name => name.length > 0);
@@ -1635,7 +1605,6 @@
         mainCanvas = document.getElementById('canvas');
         mainCtx = mainCanvas.getContext('2d');
         chatBox = byId('chat_textbox');
-        soundsVolume = byId('soundsVolume');
         mainCanvas.focus();
 
         loadSettings();
