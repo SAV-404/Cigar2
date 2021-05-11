@@ -569,7 +569,7 @@
         maxScore: 0
     });
 
-    const knownSkins = new Map();
+    let knownSkins = new Map();
     const loadedSkins = new Map();
     const macroCooldown = 1000 / 7;
     const camera = {
