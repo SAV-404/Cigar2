@@ -14,7 +14,14 @@ Locate the select element in the index.html and add new entries, make sure to on
 - [Luka's Cigar](https://github.com/Luka967/Cigar)
 
 ### Uploading skins
-Upload your **PNG** files to the skins folder and run the updateSkinList file in the root directory, you can also do it manually by putting the skin names in `web/skinList.txt` separated by commas (no file extension).
+Upload your **PNG** files to the skins folder and manually put your custom skin's name and color in `web/skinList`, just like in this example:
+
+![ezgif com-gif-maker3](https://user-images.githubusercontent.com/26459304/117888704-fb44c900-b2a1-11eb-943b-1970864f1efa.gif)
+
+
+### RESULT RIGHT HERE!
+
+![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/26459304/117888642-e700cc00-b2a1-11eb-9b34-86b96a969a20.gif)
 
 ### Todos
 Check out [issue 1](https://github.com/Cigar2/Cigar2/issues/1)
