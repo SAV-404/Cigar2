@@ -1386,8 +1386,10 @@
             }
 
             const skinImage = loadedSkins.get(this.skin);
+            let f = cellColor(this.skin) || "#000000";
             if (settings.showSkins && this.skin && skinImage &&
                 skinImage.complete && skinImage.width && skinImage.height) {
+                ctx.fillStyle = ctx.strokeStyle = f;
                 if (settings.fillSkin) ctx.fill();
                 ctx.save(); // for the clip
                 ctx.clip();
