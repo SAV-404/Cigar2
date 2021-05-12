@@ -1,7 +1,7 @@
 {
   "name": "cigar2",
   "version": "1.2.3",
-  "description": "Protocol 6 Agar.io client for private servers",
+  "description": "Protocol 6 Vanilla Agar.io client for private servers",
   "main": "webserver.js",
   "scripts": {
     "start": "node webserver.js"
