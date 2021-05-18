@@ -645,19 +645,12 @@
         escape: false,
     };
     
-    function get_skin() {
-        return new Promise(function(resolve, reject) {
-            $.get("./skinList", function(data) {
-                resolve(JSON.parse(data))
-            })
-        })
-    }
     function sort_skin() {
-        return new Promise(async function(resolve, reject) {
-            knownSkins = await get_skin(); 
-            byId('gallery-btn').style.display = 'inline-block';        
-        })
-    }
+       fetch('./skinList.json').then(resp => resp.json()).then(data => {
+        knownSkins = data["skinConfig"];
+    });
+       byId('gallery-btn').style.display = 'inline-block';    
+   }
     function cellColor(value){
         for (var i = 0; i < knownSkins.length; i++) {
             if (knownSkins[i].skinName == value) {
