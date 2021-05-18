@@ -1,8 +1,8 @@
 {
-  "skinConfig":[
-  {
-    "skinName": "doge",
-    "cellColor": "b5995c"
-  }
-]
+  "skinConfig": [
+    {
+      "skinName": "doge",
+      "cellColor": "b5995c"
+    }
+  ]
 }
