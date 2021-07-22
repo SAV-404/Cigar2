@@ -13,6 +13,12 @@ Locate the select element in the index.html and add new entries, make sure to on
 - [Original Cigar](https://github.com/CigarProject/Cigar)
 - [Luka's Cigar](https://github.com/Luka967/Cigar)
 
+### getting started: instalation guide
+1: access the game's directory using command `cd cigar2`.
+2: install required dependencies with command `npm i`.
+3: execute the game with command `node webserver.js`.
+4: now your game is hosted on port `3000`.
+
 ### Uploading skins
 Upload your **PNG** files to the skins folder and manually put your custom skin's name and color in `web/skinList`, just like in this example:
 
